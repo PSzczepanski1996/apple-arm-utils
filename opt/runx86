@@ -1,8 +1,17 @@
 #!/bin/bash
 
-arch -x86_64 /bin/bash -c "
-        PREVIOUS_PATH=$PATH
-        export PATH=/usr/local/bin:$PATH
-        $@
-        export PATH=$PREVIOUS_PATH
-"
+CMD=$@ arch -x86_64 /bin/bash --rcfile <(echo '
+        export PATH="/usr/local/bin:$PATH"
+        export LDFLAGS="-L/usr/local/opt/zlib/lib"
+        export LDFLAGS="$LDFLAGS -L/usr/local/opt/bzip2/lib"
+        export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl@1.1/lib"
+        export CFLAGS="-I/usr/local/opt/zlib/include"
+        export CFLAGS="$CFLAGS -I/usr/local/opt/bzip2/include"
+        export CFLAGS="$CFLAGS -I/usr/local/opt/openssl@1.1/include"
+        export CFLAGS="$CFLAGS -I$(xcrun --show-sdk-path)/usr/include -Wno-implicit-function-declaration"
+        export CPPFLAGS="-I/usr/local/opt/zlib/include"
+        export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/bzip2/include"
+        export CPPFLAGS="$CPPFLAGS -I$(xcrun --show-sdk-path)/usr/include -Wno-implicit-function-declaration"
+        $CMD
+        exit
+')
