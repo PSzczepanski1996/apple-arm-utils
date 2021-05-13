@@ -1,0 +1,4 @@
+PREVIOUS_PATH=$PATH
+PATH=/usr/local/bin:$PATH
+arch -x86_64 $@
+PATH=$PREVIOUS_PATH
