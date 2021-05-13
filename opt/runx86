@@ -1,4 +1,8 @@
-PREVIOUS_PATH=$PATH
-PATH=/usr/local/bin:$PATH
-arch -x86_64 $@
-PATH=$PREVIOUS_PATH
+#!/bin/bash
+
+arch -x86_64 /bin/bash -c "
+        PREVIOUS_PATH=$PATH
+        export PATH=/usr/local/bin:$PATH
+        $@
+        export PATH=$PREVIOUS_PATH
+"
