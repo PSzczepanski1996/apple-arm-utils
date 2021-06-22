@@ -1,10 +1,7 @@
 #!/bin/bash
 
 CMD=$@ arch -x86_64 /bin/bash --rcfile <(echo '
-	export PATH="/usr/local/bin:$PATH"
-	export PYENV_ROOT="$HOME/.pyenv"
-	export PATH="$PYENV_ROOT/bin:$PATH"
-	eval "$(pyenv init --path)"
+	export PATH="$VIRTUAL_ENV/bin:/usr/local/bin:$PATH"
 	export LDFLAGS="-L/usr/local/opt/zlib/lib"
 	export LDFLAGS="$LDFLAGS -L/usr/local/opt/bzip2/lib"
 	export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl@1.1/lib"
